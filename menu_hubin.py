@@ -1,3 +1,4 @@
+from usuarios import cadastrar_usuario, login_usuario
 import os
 
 ''' funcao limpar_tela: limpa a tela do terminal, dependendo do sistema operacional , sendo cls para Windows e clear para Linux e MacOS '''
@@ -119,13 +120,23 @@ def menu_principal():
         opcao = ler_opcao()
 
         if opcao == 1:
-            menu_candidato()
+            tipo = login_usuario()
+            if tipo == "Candidato":
+                menu_candidato()
+            elif tipo == "Empresa":
+                print("\nVocê não pode acessar a área de candidato com uma conta de empresa.")
+                pausar()
 
         elif opcao == 2:
-            menu_empresa()
+            tipo = login_usuario()
+            if tipo == "Empresa":
+                menu_empresa()
+            elif tipo == "Candidato":
+                print("\nVocê não pode acessar a área de empresa com uma conta de candidato.")
+                pausar()
 
         elif opcao == 3:
-            print("\nCadastro em desenvolvimento.")
+            cadastrar_usuario()
             pausar()
 
         elif opcao == 0:
