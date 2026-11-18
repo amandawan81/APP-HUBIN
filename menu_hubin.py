@@ -1,20 +1,20 @@
+
 from usuarios import cadastrar_usuario, login_usuario
 import os
 
-''' funcao limpar_tela: limpa a tela do terminal, dependendo do sistema operacional , sendo cls para Windows e clear para Linux e MacOS '''
+
 def limpar_tela():
+    """Limpa a tela do terminal."""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-''' funcao pausar: pausa a execucao do programa ate que o usuario pressione Enter '''
-def pausar(): 
+def pausar():
+    """Pausa o programa até o usuário pressionar Enter."""
     input("\nPressione Enter para continuar...")
 
 
-'''
-funcao ler_opcao: le a opcao digitada pelo usuario e trata erros, ao inves de colocar um try execpt no codigo todo eu enxutei o codigo para ficar mais simples
-'''
 def ler_opcao():
+    """Lê a opção digitada e trata entradas inválidas."""
     try:
         opcao = int(input("\nEscolha uma opção: "))
         return opcao
@@ -23,7 +23,6 @@ def ler_opcao():
         print("\nErro! Digite apenas números.")
         pausar()
         return None
-
 
 
 def menu_candidato():
@@ -61,7 +60,6 @@ def menu_candidato():
         elif opcao is not None:
             print("\nOpção não encontrada no menu!")
             pausar()
-
 
 
 def menu_empresa():
@@ -106,7 +104,6 @@ def menu_empresa():
             pausar()
 
 
-
 def menu_principal():
     while True:
         limpar_tela()
@@ -120,22 +117,31 @@ def menu_principal():
         opcao = ler_opcao()
 
         if opcao == 1:
+            limpar_tela()
             tipo = login_usuario()
+
             if tipo == "Candidato":
+                limpar_tela()
                 menu_candidato()
+
             elif tipo == "Empresa":
                 print("\nVocê não pode acessar a área de candidato com uma conta de empresa.")
                 pausar()
 
         elif opcao == 2:
+            limpar_tela()
             tipo = login_usuario()
+
             if tipo == "Empresa":
+                limpar_tela()
                 menu_empresa()
+
             elif tipo == "Candidato":
                 print("\nVocê não pode acessar a área de empresa com uma conta de candidato.")
                 pausar()
 
         elif opcao == 3:
+            limpar_tela()
             cadastrar_usuario()
             pausar()
 
@@ -146,6 +152,11 @@ def menu_principal():
         elif opcao is not None:
             print("\nOpção não encontrada no menu!")
             pausar()
+
+
+if __name__ == "__main__":
+    menu_principal()
+
 
 
 if __name__ == "__main__":
