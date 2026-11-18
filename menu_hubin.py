@@ -1,28 +1,141 @@
 import os
 
+''' funcao limpar_tela: limpa a tela do terminal, dependendo do sistema operacional , sendo cls para Windows e clear para Linux e MacOS '''
 def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+
+''' funcao pausar: pausa a execucao do programa ate que o usuario pressione Enter '''
+def pausar(): 
+    input("\nPressione Enter para continuar...")
+
+
+'''
+funcao ler_opcao: le a opcao digitada pelo usuario e trata erros, ao inves de colocar um try execpt no codigo todo eu enxutei o codigo para ficar mais simples
+'''
+def ler_opcao():
+    try:
+        opcao = int(input("\nEscolha uma opção: "))
+        return opcao
+
+    except ValueError:
+        print("\nErro! Digite apenas números.")
+        pausar()
+        return None
+
+
+
+def menu_candidato():
+    while True:
+        limpar_tela()
+
+        print("\n===== ÁREA DO CANDIDATO =====")
+        print("1 - Explorar vagas")
+        print("2 - Minhas candidaturas")
+        print("3 - Vagas favoritas")
+        print("4 - Meu perfil")
+        print("0 - Voltar ao menu principal")
+
+        opcao = ler_opcao()
+
+        if opcao == 1:
+            print("\nAqui serão exibidas as vagas.")
+            pausar()
+
+        elif opcao == 2:
+            print("\nAqui estarão suas candidaturas.")
+            pausar()
+
+        elif opcao == 3:
+            print("\nAqui estarão suas vagas favoritas.")
+            pausar()
+
+        elif opcao == 4:
+            print("\nAqui estarão os dados do seu perfil.")
+            pausar()
+
+        elif opcao == 0:
+            break
+
+        elif opcao is not None:
+            print("\nOpção não encontrada no menu!")
+            pausar()
+
+
+
+def menu_empresa():
+    while True:
+        limpar_tela()
+
+        print("\n===== ÁREA DA EMPRESA =====")
+        print("1 - Publicar vaga")
+        print("2 - Gerenciar vagas")
+        print("3 - Ver candidatos")
+        print("4 - Ver matches")
+        print("5 - Perfil da empresa")
+        print("0 - Voltar ao menu principal")
+
+        opcao = ler_opcao()
+
+        if opcao == 1:
+            print("\nCadastro de vagas.")
+            pausar()
+
+        elif opcao == 2:
+            print("\nGerenciamento das vagas.")
+            pausar()
+
+        elif opcao == 3:
+            print("\nLista de candidatos.")
+            pausar()
+
+        elif opcao == 4:
+            print("\nMatches da empresa.")
+            pausar()
+
+        elif opcao == 5:
+            print("\nInformações da empresa.")
+            pausar()
+
+        elif opcao == 0:
+            break
+
+        elif opcao is not None:
+            print("\nOpção não encontrada no menu!")
+            pausar()
+
+
 
 def menu_principal():
     while True:
         limpar_tela()
-        print("\n===== HUBIN =====")
+
+        print("\n========== HUBIN ==========")
         print("1 - Entrar como candidato")
         print("2 - Entrar como empresa")
         print("3 - Cadastrar-se")
         print("0 - Sair")
 
-        opcao = input("Escolha: ")
+        opcao = ler_opcao()
 
-        if opcao == "1":
-            print("Menu do candidato")
-        elif opcao == "2":
-            print("Menu da empresa")
-        elif opcao == "3":
-            print("Cadastro")
-        elif opcao == "0":
+        if opcao == 1:
+            menu_candidato()
+
+        elif opcao == 2:
+            menu_empresa()
+
+        elif opcao == 3:
+            print("\nCadastro em desenvolvimento.")
+            pausar()
+
+        elif opcao == 0:
+            print("\nEncerrando o Hubin...")
             break
-        else:
-            print("Opção inválida!")
 
-menu_principal()
+        elif opcao is not None:
+            print("\nOpção não encontrada no menu!")
+            pausar()
+
+
+if __name__ == "__main__":
+    menu_principal()
