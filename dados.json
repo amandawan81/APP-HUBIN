@@ -1,0 +1,31 @@
+{
+    "usuarios": [
+        {
+            "nome": "foda",
+            "email": "nn@gmail.com",
+            "senha": "991199",
+            "tipo": "Candidato"
+        },
+        {
+            "nome": "kkk",
+            "email": "kkk@gmail.com",
+            "senha": "991199",
+            "tipo": "Candidato"
+        }
+    ],
+    "candidatos": [
+        {
+            "nome": "kkk",
+            "email": "kkk@gmail.com",
+            "telefone": "",
+            "cidade": "",
+            "area": "",
+            "habilidades": [],
+            "experiencia": "",
+            "favoritas": []
+        }
+    ],
+    "empresas": [],
+    "vagas": [],
+    "candidaturas": []
+}
