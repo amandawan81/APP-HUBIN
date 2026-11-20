@@ -35,22 +35,20 @@ def carregar_candidato(email, titulo):
             return dados, candidato
 
 
-def ja_candidatou(dados, email, id_vaga):
-    """verifica se o candidato já se candidatou à vaga."""
+def ja_curtiu(dados, email, id_vaga):
+    """verifica se o candidato já curtiu (se candidatou) a vaga."""
     for candidatura in dados["candidaturas"]:
         if candidatura["email_candidato"] == email and candidatura["id_vaga"] == id_vaga:
             return True
     return False
 
 
-def ver_vagas(email, titulo, so_favoritas):
+def explorar_vagas(email):
     """mostra as vagas uma por vez (estilo Tinder): curtir, favoritar ou passar."""
-    dados, candidato = carregar_candidato(email, titulo)
+    dados, candidato = carregar_candidato(email, "Explorar vagas")
     vagas = []
     for vaga in dados["vagas"]:
-        if so_favoritas and vaga["id"] in candidato["favoritas"]:
-            vagas.append(vaga)
-        elif not so_favoritas and vaga.get("ativa", True) and not ja_candidatou(dados, email, vaga["id"]):
+        if vaga.get("ativa", True) and not ja_curtiu(dados, email, vaga["id"]):
             vagas.append(vaga)
 
     numero = 0
@@ -65,14 +63,12 @@ def ver_vagas(email, titulo, so_favoritas):
 
         if opcao == "0":
             break
-        elif opcao == "1" and ja_candidatou(dados, email, vaga["id"]):
-            print("\nVocê já se candidatou a esta vaga!")
         elif opcao == "1":
             candidatura = {"id_vaga": vaga["id"], "titulo_vaga": mostrar(vaga, "titulo"),
                            "empresa": mostrar(vaga, "empresa"), "email_candidato": email,
                            "nome_candidato": candidato["nome"], "status": "Em análise"}
             dados["candidaturas"].append(candidatura)
-            print("\nCandidatura realizada com sucesso!")
+            print("\nVaga curtida! Candidatura enviada.")
         elif opcao == "2" and vaga["id"] in candidato["favoritas"]:
             candidato["favoritas"].remove(vaga["id"])
             print("\nVaga removida das favoritas!")
@@ -86,40 +82,6 @@ def ver_vagas(email, titulo, so_favoritas):
         input("\nPressione Enter para ver a próxima vaga...")
 
     print("\nNão há mais vagas para mostrar.")
-
-
-def explorar_vagas(email):
-    """mostra as vagas abertas que o candidato ainda não curtiu."""
-    ver_vagas(email, "Explorar vagas", False)
-
-
-def vagas_favoritas(email):
-    """mostra as vagas favoritas do candidato."""
-    ver_vagas(email, "Vagas favoritas", True)
-
-
-def minhas_candidaturas(email):
-    """lista as candidaturas do candidato e deixa cancelar uma delas."""
-    dados, candidato = carregar_candidato(email, "Minhas candidaturas")
-    minhas = []
-    for candidatura in dados["candidaturas"]:
-        if candidatura["email_candidato"] == email:
-            minhas.append(candidatura)
-            print(f"{len(minhas)} - {candidatura['titulo_vaga']} | {candidatura['empresa']} | "
-                  f"Status: {candidatura['status']}")
-
-    if len(minhas) == 0:
-        print("\nVocê ainda não se candidatou a nenhuma vaga.")
-        return
-
-    opcao = input("\nNúmero da candidatura para cancelar (0 para voltar): ").strip()
-    if opcao.isdigit() and int(opcao) >= 1 and int(opcao) <= len(minhas):
-        if input("Confirmar cancelamento? (s/n): ").strip().lower() == "s":
-            dados["candidaturas"].remove(minhas[int(opcao) - 1])
-            salvar_dados(dados)
-            print("\nCandidatura cancelada com sucesso!")
-    elif opcao != "0":
-        print("\nOpção não encontrada!")
 
 
 def meu_perfil(email):
