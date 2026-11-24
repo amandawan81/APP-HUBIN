@@ -1,9 +1,12 @@
+"""Gerencia as decisões de swipe e as vagas favoritas dos candidatos."""
+
 from arquivos import carregar_dados, salvar_dados
 from candidatos import mostrar
 from usuarios import limpar_tela
 
 
 def carregar_interacoes(email):
+    """Carrega os dados e migra favoritos antigos do perfil para a lista de interações."""
     dados = carregar_dados()
     if "interacoes" not in dados:
         dados["interacoes"] = []
@@ -26,6 +29,7 @@ def carregar_interacoes(email):
 
 
 def buscar_interacao(dados, email, id_vaga):
+    """Retorna a decisão do candidato para a vaga, ou None se ela ainda não existir."""
     for interacao in dados["interacoes"]:
         if interacao["candidato_email"] == email and interacao["vaga_id"] == id_vaga:
             return interacao
@@ -48,7 +52,7 @@ def vagas_por_id(dados):
 
 
 def registrar_interacao(email, id_vaga, decisao):
-    """Salva a primeira decisão do candidato para a vaga."""
+    """Salva a primeira decisão válida para uma vaga existente, sem criar duplicatas."""
     if decisao != "gostei" and decisao != "nao gostei":
         return None
 
@@ -63,6 +67,7 @@ def registrar_interacao(email, id_vaga, decisao):
 
 
 def mostrar_vaga(vaga):
+    """Exibe os principais campos disponíveis de uma vaga no terminal."""
     campos = {"titulo": "Vaga", "empresa": "Empresa", "salario": "Salário", "modalidade": "Modalidade"}
     for campo in campos:
         if campo in vaga:
@@ -70,7 +75,10 @@ def mostrar_vaga(vaga):
 
 
 def explorar_vagas(email):
-    """Exibe vagas disponíveis e indica se o menu deve pausar ao final."""
+    """Mostra vagas ativas ainda não avaliadas e registra gostei ou não gostei.
+
+    Gostar adiciona aos favoritos, mas não envia candidatura. Retorna True
+    quando as vagas acabam e False quando o candidato escolhe voltar."""
     limpar_tela()
     dados = carregar_interacoes(email)
     decisoes = {"D": "gostei", "E": "nao gostei"}
@@ -111,7 +119,9 @@ def remover_favorita(email, id_vaga):
 
 
 def vagas_favoritas(email):
-    """Exibe os favoritos e indica se o menu deve pausar ao final."""
+    """Lista vagas marcadas com gostei e permite removê-las.
+
+    Retorna True se a lista estiver vazia e False quando o candidato voltar."""
     while True:
         dados = carregar_interacoes(email)
         print("\n=== Vagas favoritas ===")

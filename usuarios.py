@@ -1,3 +1,5 @@
+"""Cuida do cadastro, da autenticação e da limpeza do terminal."""
+
 
 import os
 from arquivos import carregar_dados, salvar_dados
@@ -9,7 +11,7 @@ def limpar_tela():
 
 
 def cadastrar_usuario():
-    """cadastra um novo usuário no sistema."""
+    """Cadastra uma conta e, para candidatos, cria também um perfil com dados opcionais."""
     dados = carregar_dados()
 
     print("\n=== Cadastro de usuário ===")
@@ -87,7 +89,7 @@ def cadastrar_usuario():
 
 
 def login_usuario():
-    """realiza o login do usuário no sistema."""
+    """Solicita credenciais até entrar ou voltar; retorna o tipo e o email da conta."""
     dados = carregar_dados()
 
     while True:

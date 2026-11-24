@@ -1,3 +1,5 @@
+"""Reúne a visualização e edição do perfil e um fluxo anterior de vagas."""
+
 from arquivos import carregar_dados, salvar_dados
 from usuarios import limpar_tela
 
@@ -18,7 +20,7 @@ def mostrar(dicionario, campo):
 
 
 def carregar_candidato(email, titulo):
-    """abre os dados, mostra o título e acha o perfil do candidato (cria no primeiro acesso)."""
+    """Busca o perfil pelo email ou cria um perfil em memória para um usuário existente."""
     dados = carregar_dados()
     limpar_tela()
     print(f"\n=== {titulo} ===")
@@ -36,7 +38,7 @@ def carregar_candidato(email, titulo):
 
 
 def ja_curtiu(dados, email, id_vaga):
-    """verifica se o candidato já curtiu (se candidatou) a vaga."""
+    """Verifica se já existe uma candidatura do candidato para a vaga."""
     for candidatura in dados["candidaturas"]:
         if candidatura["email_candidato"] == email and candidatura["id_vaga"] == id_vaga:
             return True
@@ -44,7 +46,7 @@ def ja_curtiu(dados, email, id_vaga):
 
 
 def explorar_vagas(email):
-    """mostra as vagas uma por vez (estilo Tinder): curtir, favoritar ou passar."""
+    """Fluxo anterior de vagas: permite candidatar-se ou alterar favoritos do perfil."""
     dados, candidato = carregar_candidato(email, "Explorar vagas")
     vagas = []
     for vaga in dados["vagas"]:
@@ -85,7 +87,7 @@ def explorar_vagas(email):
 
 
 def meu_perfil(email):
-    """mostra o perfil do candidato e permite editar."""
+    """Mostra e edita o perfil, mantendo o nome sincronizado com o cadastro."""
     dados, candidato = carregar_candidato(email, "Meu perfil")
     print(f"Email: {email}")
     for campo in CAMPOS_PERFIL:
