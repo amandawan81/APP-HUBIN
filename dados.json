@@ -11,6 +11,12 @@
             "email": "joana@gmail.com",
             "senha": "1234",
             "tipo": "Candidato"
+        },
+        {
+            "nome": "amanda lira",
+            "email": "amanda@gmail.com",
+            "senha": "1234@",
+            "tipo": "Candidato"
         }
     ],
     "candidatos": [
@@ -33,6 +39,16 @@
             "area": "fisica nuclear",
             "habilidades": "pesquisa de fisica",
             "experiencia": "nenhuma"
+        },
+        {
+            "nome": "amanda lira",
+            "email": "amanda@gmail.com",
+            "favoritas": [],
+            "telefone": "928283839",
+            "cidade": "recife",
+            "area": "analista",
+            "habilidades": "linda",
+            "experiencia": "maravilhosa"
         }
     ],
     "empresas": [],
@@ -88,6 +104,26 @@
         {
             "candidato_email": "luigi8anos2015@gmail.com",
             "vaga_id": 3,
+            "decisao": "gostei"
+        },
+        {
+            "candidato_email": "luigi8anos2015@gmail.com",
+            "vaga_id": 4,
+            "decisao": "gostei"
+        },
+        {
+            "candidato_email": "luigi8anos2015@gmail.com",
+            "vaga_id": 5,
+            "decisao": "nao gostei"
+        },
+        {
+            "candidato_email": "amanda@gmail.com",
+            "vaga_id": 1,
+            "decisao": "gostei"
+        },
+        {
+            "candidato_email": "amanda@gmail.com",
+            "vaga_id": 2,
             "decisao": "gostei"
         }
     ]
