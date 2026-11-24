@@ -1,6 +1,7 @@
 
 from usuarios import cadastrar_usuario, login_usuario
-from candidatos import explorar_vagas, meu_perfil
+from candidatos import meu_perfil
+from interacoes import explorar_vagas, vagas_favoritas
 import os
 
 
@@ -40,16 +41,16 @@ def menu_candidato(email):
         opcao = ler_opcao()
 
         if opcao == 1:
-            explorar_vagas(email)
-            pausar()
+            if explorar_vagas(email):
+                pausar()
 
         elif opcao == 2:
             print("\nAqui estarão suas candidaturas.")
             pausar()
 
         elif opcao == 3:
-            print("\nAqui estarão suas vagas favoritas.")
-            pausar()
+            if vagas_favoritas(email):
+                pausar()
 
         elif opcao == 4:
             meu_perfil(email)

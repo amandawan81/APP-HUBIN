@@ -94,6 +94,8 @@ def meu_perfil(email):
     if input("\n1 - Editar perfil\n0 - Voltar\n\nEscolha uma opção: ").strip() != "1":
         return
 
+    limpar_tela()
+    print("\n=== Editar perfil ===")
     print("\n(Pressione Enter para manter a informação atual)")
     for campo in CAMPOS_PERFIL:
         novo = input(f"{CAMPOS_PERFIL[campo]}: ").strip()
@@ -106,4 +108,5 @@ def meu_perfil(email):
             usuario["nome"] = candidato["nome"]
 
     salvar_dados(dados)
+    limpar_tela()
     print("\nPerfil atualizado com sucesso!")

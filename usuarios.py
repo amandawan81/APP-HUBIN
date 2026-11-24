@@ -17,6 +17,10 @@ def cadastrar_usuario():
     nome = input("Digite seu nome completo: ")
     email = input("Digite seu email: ").strip().lower()
 
+    if "@" not in email:
+        print("O email precisa ter um @.")
+        return
+
     # verifica se o email já está cadastrado
     for usuario in dados["usuarios"]:
         if usuario["email"].lower() == email:
@@ -44,6 +48,37 @@ def cadastrar_usuario():
         "senha": senha,
         "tipo": tipo
     }
+
+    if tipo == "Candidato":
+        limpar_tela()
+        print("\n=== Informações opcionais do perfil ===")
+        while True:
+            resposta = input("Quer preencher as informações adicionais? (S/N): ").strip().upper()
+            if resposta == "S" or resposta == "N":
+                break
+            print("Digite S para sim ou N para não.")
+
+        campos = {
+            "telefone": "Telefone",
+            "cidade": "Cidade",
+            "area": "Área de interesse",
+            "habilidades": "Habilidades",
+            "experiencia": "Experiência"
+        }
+        candidato = {"nome": nome, "email": email, "favoritas": []}
+        if resposta == "S":
+            limpar_tela()
+            print("\n=== Informações adicionais ===")
+            print("Pressione Enter para pular um campo.")
+
+        for campo in campos:
+            candidato[campo] = ""
+            if resposta == "S":
+                candidato[campo] = input(campos[campo] + ": ").strip()
+
+        if "candidatos" not in dados:
+            dados["candidatos"] = []
+        dados["candidatos"].append(candidato)
 
     dados["usuarios"].append(usuario)
     salvar_dados(dados)
