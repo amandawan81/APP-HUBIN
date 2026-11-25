@@ -1,3 +1,5 @@
+"""Reúne a visualização e a edição do perfil do candidato."""
+
 from arquivos import carregar_dados, salvar_dados
 from usuarios import limpar_tela
 
@@ -16,7 +18,7 @@ def mostrar(dicionario, campo):
 
 
 def carregar_candidato(email, titulo):
-    """abre os dados, mostra o título e acha o perfil do candidato (cria no primeiro acesso)."""
+    """Busca o perfil pelo email ou cria um perfil em memória para um usuário existente."""
     dados = carregar_dados()
     limpar_tela()
     print(f"\n=== {titulo} ===")
@@ -34,7 +36,7 @@ def carregar_candidato(email, titulo):
 
 
 def meu_perfil(email):
-    """mostra o perfil do candidato e permite editar."""
+    """Mostra e edita o perfil, mantendo o nome sincronizado com o cadastro."""
     dados, candidato = carregar_candidato(email, "Meu perfil")
     print(f"Email: {email}")
     for campo in CAMPOS_PERFIL:

@@ -1,8 +1,10 @@
+"""Lê e grava os dados do aplicativo no arquivo JSON."""
+
 import json
 
 
 def carregar_dados():
-    """le e retorna os dados armazenados no JSON."""
+    """Lê dados.json e retorna um dicionário vazio se o arquivo faltar ou for inválido."""
     try:
         with open("dados.json", "r", encoding="utf-8") as arquivo:
             dados = json.load(arquivo)
@@ -18,6 +20,6 @@ def carregar_dados():
 
 
 def salvar_dados(dados):
-    """salva as informações recebidas no JSON."""
+    """Grava o dicionário completo em dados.json, substituindo o conteúdo anterior."""
     with open("dados.json", "w", encoding="utf-8") as arquivo:
         json.dump(dados, arquivo, indent=4, ensure_ascii=False)
