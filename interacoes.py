@@ -51,18 +51,21 @@ def vagas_por_id(dados):
     return vagas
 
 
-def registrar_interacao(email, id_vaga, decisao):
-    """Salva a primeira decisão válida para uma vaga existente, sem criar duplicatas."""
+def registrar_interacao(email, id_vaga, decisao, reavaliar=False):
+    """Salva uma decisão para a vaga ou atualiza a existente em uma reavaliação."""
     if decisao != "gostei" and decisao != "nao gostei":
         return None
 
     dados = carregar_interacoes(email)
     if id_vaga not in vagas_por_id(dados):
         return
-    if buscar_interacao(dados, email, id_vaga) is not None:
-        return None
-
-    dados["interacoes"].append({"candidato_email": email, "vaga_id": id_vaga, "decisao": decisao})
+    interacao = buscar_interacao(dados, email, id_vaga)
+    if interacao is None:
+        dados["interacoes"].append({"candidato_email": email, "vaga_id": id_vaga, "decisao": decisao})
+    elif reavaliar and interacao["decisao"] != decisao:
+        interacao["decisao"] = decisao
+    else:
+        return
     salvar_dados(dados)
 
 
@@ -75,38 +78,60 @@ def mostrar_vaga(vaga):
 
 
 def explorar_vagas(email):
-    """Mostra vagas ativas ainda não avaliadas e registra gostei ou não gostei.
+    """Mostra vagas ativas e oferece reavaliá-las ao chegar ao fim.
 
-    Gostar adiciona aos favoritos, mas não envia candidatura. Retorna True
-    quando as vagas acabam e False quando o candidato escolhe voltar."""
+    Retorna True se não houver vagas ativas e False ao voltar para o menu.
+    """
     limpar_tela()
-    dados = carregar_interacoes(email)
     decisoes = {"D": "gostei", "E": "nao gostei"}
-    vagas = vagas_por_id(dados)
-    for id_vaga in vagas:
-        vaga = vagas[id_vaga]
-        if "ativa" in vaga and not vaga["ativa"]:
-            continue
-        if buscar_interacao(dados, email, id_vaga) is not None:
-            continue
+    reavaliar = False
+    while True:
+        dados = carregar_interacoes(email)
+        vagas_ativas = {
+            id_vaga: vaga for id_vaga, vaga in vagas_por_id(dados).items() if vaga.get("ativa", True)
+        }
+        if not vagas_ativas:
+            print("\nNão há vagas ativas no momento.")
+            return True
 
-        print("\n=== Explorar vagas ===")
-        mostrar_vaga(vaga)
+        for id_vaga, vaga in vagas_ativas.items():
+            interacao = buscar_interacao(dados, email, id_vaga)
+            if interacao is not None and not reavaliar:
+                continue
+
+            print("\n=== Explorar vagas ===")
+            mostrar_vaga(vaga)
+            favorita = interacao is not None and interacao["decisao"] == "gostei"
+            opcao_rejeitar = "Não gostei (remover dos favoritos)" if favorita else "Não gostei"
+            while True:
+                opcao = input(f"\nD - Gostei | E - {opcao_rejeitar} | 0 - Voltar\nEscolha uma opção: ").strip().upper()
+                if opcao == "0":
+                    return False
+                if opcao in decisoes:
+                    break
+                print("\nOpção inválida. Tente novamente.")
+
+            registrar_interacao(email, id_vaga, decisoes[opcao], reavaliar=reavaliar)
+            if opcao == "D":
+                mensagem = "Esta vaga já está nos favoritos!" if favorita else "Vaga adicionada aos favoritos!"
+                print(f"\n{mensagem}")
+                input("\nPressione Enter para continuar...")
+
+            limpar_tela()
+            if opcao == "E" and favorita:
+                print("\nVaga removida dos favoritos!")
+
+        print("\nNão há mais vagas disponíveis para avaliar.")
         while True:
-            opcao = input("\nD - Gostei | E - Não gostei | 0 - Voltar\nEscolha uma opção: ").strip().upper()
+            opcao = input("\n1 - Rever todas as vagas | 0 - Voltar ao menu\nEscolha uma opção: ").strip()
             if opcao == "0":
                 return False
-            if opcao in decisoes:
+            if opcao == "1":
                 break
             print("\nOpção inválida. Tente novamente.")
 
-        registrar_interacao(email, id_vaga, decisoes[opcao])
+        reavaliar = True
         limpar_tela()
-        if opcao == "D":
-            print("\nVaga adicionada aos favoritos!")
-
-    print("\nNão há mais vagas disponíveis para avaliar.")
-    return True
 
 
 def remover_favorita(email, id_vaga):
