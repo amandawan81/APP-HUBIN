@@ -56,8 +56,7 @@ def gerar_id(dados):
     campos_id = {
         "vagas": "id",
         "interacoes": "vaga_id",
-        "interesses_empresas": "vaga_id",
-        "candidaturas": "id_vaga"
+        
     }
     for lista in campos_id:
         if lista in dados:
