@@ -178,15 +178,15 @@ def editar_vaga(usuario):
     if descricao != "":
         vaga["descricao"] = descricao
 
-    resposta = input("Deseja mudar a modalidade? (s/n): ")
+    resposta = input("Deseja mudar a modalidade? (s/n): ").strip().lower()
     if resposta == "s":
         vaga["modalidade"] = escolher_modalidade()
 
-    resposta = input("Deseja mudar o contrato (s/n): ")
+    resposta = input("Deseja mudar o contrato (s/n): ").strip().lower()
     if resposta == "s":
         vaga["contrato"] = escolher_contrato()
 
-    resposta = input("Deseja mudar o salario (s/n): ")
+    resposta = input("Deseja mudar o salario (s/n): ").strip().lower()
     if resposta == "s":
         vaga["salario"] = ler_salario()
 
@@ -203,7 +203,7 @@ def excluir_vaga(usuario):
     if vaga is None:
         return
 
-    resposta = input(f"Tem certeza que deseja excluir '{vaga['titulo']}'? (s/n): ")
+    resposta = input(f"Tem certeza que deseja excluir '{vaga['titulo']}'? (s/n): ").strip().lower()
 
     if resposta == "s":
         dados["vagas"].remove(vaga)
