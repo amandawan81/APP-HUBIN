@@ -77,10 +77,6 @@ def registrar_interacao(email, id_vaga, decisao, reavaliar=False):
         interacao["decisao"] = decisao
     else:
         return
-    if decisao == "gostei":
-        from match import verificar_match
-
-        verificar_match(dados, email, id_vaga)
     salvar_dados(dados)
 
 

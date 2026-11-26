@@ -1,6 +1,13 @@
 ## 🚀 Como executar o HubIn
 
-O HubIn reúne cadastro, perfis de candidato e empresa, vagas, swipe, favoritos e match em um programa Python que armazena os dados em JSON.
+O HubIn reúne cadastro, perfis de candidato e empresa, vagas, swipe e favoritos em um programa Python que armazena os dados em JSON.
+
+### Integrantes do grupo
+
+- Elisa Martins Galindo Santos
+- Jose Regis Da Silva Neto
+- Amanda Lira Wanderley
+- Luigi Borella Toledo
 
 ### 📌 Como executar o projeto
 
@@ -97,15 +104,13 @@ O arquivo `dados.json` inclui três contas de demonstração (`candidato1@exampl
 
 Também é possível abrir o `dados.json` para observar as alterações registradas pelo sistema.
 
-Para testar o match, entre como empresa e cadastre o perfil na opção `5 - Perfil da empresa`. Publique uma vaga com a opção `1 - Publicar vaga`. Em `3 - Ver candidatos`, selecione o candidato e informe o ID da vaga para registrar o interesse. Quando o candidato também marcar `D` nessa vaga, o match aparece em `4 - Ver matches`.
-
 **Observação:** execute o programa a partir da pasta principal do projeto, onde está localizado o `dados.json`.
 
 ### 📁 Arquivos principais
 
 | Arquivo | Função |
 |---|---|
-| `interacoes.py` | Swipe, favoritos e match |
+| `interacoes.py` | Swipe e favoritos |
 | `menu_hubin.py` | Menus e navegação pelo terminal |
 | `usuarios.py` | Cadastro e login |
 | `candidatos.py` | Perfil do candidato |

@@ -5,7 +5,6 @@ from usuarios import cadastrar_usuario, login_usuario
 from candidatos import meu_perfil
 from empresa import menu_perfil_empresa
 from interacoes import explorar_vagas, vagas_favoritas
-from match import consultar_matches, empresa_interesse
 from vagas import menu_gerenciar_vagas, publicar_vaga
 import os
 
@@ -78,9 +77,7 @@ def menu_empresa(usuario):
         print("\n===== ÁREA DA EMPRESA =====")
         print("1 - Publicar vaga")
         print("2 - Gerenciar vagas")
-        print("3 - Ver candidatos")
-        print("4 - Ver matches")
-        print("5 - Perfil da empresa")
+        print("3 - Perfil da empresa")
         print("0 - Voltar ao menu principal")
 
         opcao = ler_opcao()
@@ -93,14 +90,6 @@ def menu_empresa(usuario):
             menu_gerenciar_vagas(usuario)
 
         elif opcao == 3:
-            empresa_interesse(usuario)
-            pausar()
-
-        elif opcao == 4:
-            consultar_matches(usuario)
-            pausar()
-
-        elif opcao == 5:
             menu_perfil_empresa(usuario)
 
         elif opcao == 0:
