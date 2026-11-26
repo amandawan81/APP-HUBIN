@@ -6,25 +6,10 @@ from usuarios import limpar_tela
 
 
 def carregar_interacoes(email):
-    """Carrega os dados e migra favoritos antigos do perfil para a lista de interações."""
+    """Carrega os dados e garante que a lista de interações exista."""
     dados = carregar_dados()
     if "interacoes" not in dados:
         dados["interacoes"] = []
-    if "candidatos" not in dados:
-        return dados
-
-    for candidato in dados["candidatos"]:
-        if candidato["email"] != email or "favoritas" not in candidato or not candidato["favoritas"]:
-            continue
-
-        # Migra os favoritos antigos sem sobrescrever decisões existentes.
-        for id_vaga in candidato["favoritas"]:
-            if buscar_interacao(dados, email, id_vaga) is None:
-                dados["interacoes"].append({"candidato_email": email, "vaga_id": id_vaga, "decisao": "gostei"})
-        candidato["favoritas"] = []
-        salvar_dados(dados)
-        break
-
     return dados
 
 
