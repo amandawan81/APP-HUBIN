@@ -51,22 +51,24 @@ def ler_salario():
             print("Erro! Digite apenas numeros, com ponto no lugar da virgula.")
 
 def gerar_id(dados):
-    """Evita reutilizar IDs ainda referenciados no histórico."""
-    maior = 0
-    campos_id = {
-        "vagas": "id",
-        "interacoes": "vaga_id",
-        
-    }
-    for lista in campos_id:
-        if lista in dados:
-            campo = campos_id[lista]
-            for registro in dados[lista]:
-                if campo in registro:
-                    id_vaga = registro[campo]
-                    if isinstance(id_vaga, int) and id_vaga > maior:
-                        maior = id_vaga
-    return maior + 1
+    """Devolve o próximo ID livre: o maior ID já usado + 1."""
+    maior_id = 0
+
+    # procura o maior ID entre as vagas existentes
+    if "vagas" in dados:
+        for vaga in dados["vagas"]:
+            if "id" in vaga and isinstance(vaga["id"], int):
+                if vaga["id"] > maior_id:
+                    maior_id = vaga["id"]
+
+    # vagas apagadas podem deixar IDs nas interações, então olha elas também
+    if "interacoes" in dados:
+        for interacao in dados["interacoes"]:
+            if "vaga_id" in interacao and isinstance(interacao["vaga_id"], int):
+                if interacao["vaga_id"] > maior_id:
+                    maior_id = interacao["vaga_id"]
+
+    return maior_id + 1
 
 def mostrar_vaga(vaga):
     """imprime os dados de uma vaga."""
