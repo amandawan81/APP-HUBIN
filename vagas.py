@@ -124,6 +124,8 @@ def vaga_da_empresa(vaga, email):
 
 def listar_minhas_vagas(usuario):
     """READ: mostra so as vagas da empresa logada."""
+    import os
+    
     dados = carregar_dados()
     encontrou = False
 
