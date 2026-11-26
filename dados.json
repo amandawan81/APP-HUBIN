@@ -1,29 +1,41 @@
 {
     "usuarios": [
         {
-            "nome": "Candidato Demo 1",
-            "email": "candidato1@example.invalid",
-            "senha": "demo-1",
+            "nome": "luigi",
+            "email": "luigi8anos2015@gmail.com",
+            "senha": "1234",
             "tipo": "Candidato"
         },
         {
-            "nome": "Candidato Demo 2",
-            "email": "candidato2@example.invalid",
-            "senha": "demo-2",
+            "nome": "joana paiva de brito",
+            "email": "joana@gmail.com",
+            "senha": "1234",
             "tipo": "Candidato"
         },
         {
-            "nome": "Candidato Demo 3",
-            "email": "candidato3@example.invalid",
-            "senha": "demo-3",
+            "nome": "amanda lira",
+            "email": "amanda@gmail.com",
+            "senha": "1234@",
             "tipo": "Candidato"
+        },
+        {
+            "nome": "joao",
+            "email": "joao123@gmail.com",
+            "senha": "123",
+            "tipo": "Candidato"
+        },
+        {
+            "nome": "marcos",
+            "email": "123@gmail",
+            "senha": "123",
+            "tipo": "Empresa"
         }
     ],
     "candidatos": [
         {
-            "nome": "Candidato Demo 1",
-            "email": "candidato1@example.invalid",
-            "telefone": "",
+            "nome": "luigi",
+            "email": "luigi8anos2015@gmail.com",
+            "telefone": "8194092700",
             "cidade": "recife",
             "area": "analista de dados",
             "habilidades": "programar em python,TYPE SCRIPT e JAVA",
@@ -31,24 +43,34 @@
             "favoritas": []
         },
         {
-            "nome": "Candidato Demo 2",
-            "email": "candidato2@example.invalid",
+            "nome": "joana paiva de brito",
+            "email": "joana@gmail.com",
             "favoritas": [],
-            "telefone": "",
+            "telefone": "819676767",
             "cidade": "recife",
             "area": "fisica nuclear",
             "habilidades": "pesquisa de fisica",
             "experiencia": "nenhuma"
         },
         {
-            "nome": "Candidato Demo 3",
-            "email": "candidato3@example.invalid",
+            "nome": "amanda lira",
+            "email": "amanda@gmail.com",
             "favoritas": [],
-            "telefone": "",
+            "telefone": "928283839",
             "cidade": "recife",
             "area": "analista",
             "habilidades": "linda",
             "experiencia": "maravilhosa"
+        },
+        {
+            "nome": "joao",
+            "email": "joao123@gmail.com",
+            "favoritas": [],
+            "telefone": "",
+            "cidade": "",
+            "area": "",
+            "habilidades": "",
+            "experiencia": ""
         }
     ],
     "empresas": [],
@@ -92,37 +114,37 @@
     "candidaturas": [],
     "interacoes": [
         {
-            "candidato_email": "candidato1@example.invalid",
+            "candidato_email": "luigi8anos2015@gmail.com",
             "vaga_id": 1,
             "decisao": "gostei"
         },
         {
-            "candidato_email": "candidato1@example.invalid",
+            "candidato_email": "luigi8anos2015@gmail.com",
             "vaga_id": 2,
             "decisao": "gostei"
         },
         {
-            "candidato_email": "candidato1@example.invalid",
+            "candidato_email": "luigi8anos2015@gmail.com",
             "vaga_id": 3,
             "decisao": "gostei"
         },
         {
-            "candidato_email": "candidato1@example.invalid",
+            "candidato_email": "luigi8anos2015@gmail.com",
             "vaga_id": 4,
             "decisao": "nao gostei"
         },
         {
-            "candidato_email": "candidato1@example.invalid",
+            "candidato_email": "luigi8anos2015@gmail.com",
             "vaga_id": 5,
             "decisao": "nao gostei"
         },
         {
-            "candidato_email": "candidato3@example.invalid",
+            "candidato_email": "amanda@gmail.com",
             "vaga_id": 1,
             "decisao": "gostei"
         },
         {
-            "candidato_email": "candidato3@example.invalid",
+            "candidato_email": "amanda@gmail.com",
             "vaga_id": 2,
             "decisao": "gostei"
         }

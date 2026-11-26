@@ -11,9 +11,11 @@ CAMPOS_PERFIL = {"nome": "Nome", "telefone": "Telefone", "cidade": "Cidade", "ar
 
 def mostrar(dicionario, campo):
     """retorna o valor do campo, ou "Não informado" se estiver vazio."""
-    if campo not in dicionario or dicionario[campo] in ("", []):
-        return "Não informado"
-    return dicionario[campo]
+    if campo in dicionario:
+        valor = dicionario[campo]
+        if valor != "" and valor != []:
+            return valor
+    return "Não informado"
 
 
 def carregar_candidato(email, titulo):

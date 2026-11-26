@@ -139,7 +139,3 @@ def menu_perfil_empresa(usuario):
             print("\nOpcao nao encontrada no menu!")
 
         input("\nPressione Enter para continuar...")
-
-if __name__ == "__main__":
-    usuario_teste = {"email": "teste@empresa.com"}
-    menu_perfil_empresa(usuario_teste)

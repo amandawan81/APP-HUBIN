@@ -4,7 +4,8 @@
 from usuarios import cadastrar_usuario, login_usuario
 from candidatos import meu_perfil
 from empresa import menu_perfil_empresa
-from interacoes import consultar_matches, empresa_interesse, explorar_vagas, vagas_favoritas
+from interacoes import explorar_vagas, vagas_favoritas
+from match import consultar_matches, empresa_interesse
 from vagas import menu_gerenciar_vagas, publicar_vaga
 import os
 
@@ -38,8 +39,8 @@ def menu_candidato(email):
 
         print("\n===== ÁREA DO CANDIDATO =====")
         print("1 - Explorar vagas")
-        print("2 - Vagas favoritas")
-        print("3 - Minhas candidaturas")
+        print("2 - Minhas candidaturas")
+        print("3 - Vagas favoritas")
         print("4 - Meu perfil")
         print("0 - Voltar ao menu principal")
 
@@ -50,7 +51,7 @@ def menu_candidato(email):
                 pausar()
 
         elif opcao == 2:
-            print("\nAqui estarão suas vagas favoritas.")
+            print("\nAqui estarão suas candidaturas.")
             pausar()
 
         elif opcao == 3:

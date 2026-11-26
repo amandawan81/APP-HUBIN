@@ -52,12 +52,22 @@ def ler_salario():
 
 def gerar_id(dados):
     """Evita reutilizar IDs ainda referenciados no histórico."""
-    ids = [vaga["id"] for vaga in dados["vagas"]]
-    campos_id = {"interacoes": "vaga_id", "interesses_empresas": "vaga_id", "candidaturas": "id_vaga"}
-    for lista, campo in campos_id.items():
+    maior = 0
+    campos_id = {
+        "vagas": "id",
+        "interacoes": "vaga_id",
+        "interesses_empresas": "vaga_id",
+        "candidaturas": "id_vaga"
+    }
+    for lista in campos_id:
         if lista in dados:
-            ids.extend(registro[campo] for registro in dados[lista] if campo in registro)
-    return max((id_vaga for id_vaga in ids if isinstance(id_vaga, int)), default=0) + 1
+            campo = campos_id[lista]
+            for registro in dados[lista]:
+                if campo in registro:
+                    id_vaga = registro[campo]
+                    if isinstance(id_vaga, int) and id_vaga > maior:
+                        maior = id_vaga
+    return maior + 1
 
 def mostrar_vaga(vaga):
     """imprime os dados de uma vaga."""
