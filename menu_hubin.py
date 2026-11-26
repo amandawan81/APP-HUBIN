@@ -3,7 +3,10 @@
 
 from usuarios import cadastrar_usuario, login_usuario
 from candidatos import meu_perfil
+from empresa import menu_perfil_empresa
 from interacoes import explorar_vagas, vagas_favoritas
+from match import consultar_matches, empresa_interesse
+from vagas import menu_gerenciar_vagas, publicar_vaga
 import os
 
 
@@ -67,8 +70,8 @@ def menu_candidato(email):
             pausar()
 
 
-def menu_empresa():
-    """Apresenta o menu da empresa; as opções ainda são espaços reservados."""
+def menu_empresa(usuario):
+    """Apresenta as opções da empresa autenticada."""
     while True:
         limpar_tela()
 
@@ -83,24 +86,22 @@ def menu_empresa():
         opcao = ler_opcao()
 
         if opcao == 1:
-            print("\nCadastro de vagas.")
+            publicar_vaga(usuario)
             pausar()
 
         elif opcao == 2:
-            print("\nGerenciamento das vagas.")
-            pausar()
+            menu_gerenciar_vagas(usuario)
 
         elif opcao == 3:
-            print("\nLista de candidatos.")
+            empresa_interesse(usuario)
             pausar()
 
         elif opcao == 4:
-            print("\nMatches da empresa.")
+            consultar_matches(usuario)
             pausar()
 
         elif opcao == 5:
-            print("\nInformações da empresa.")
-            pausar()
+            menu_perfil_empresa(usuario)
 
         elif opcao == 0:
             break
@@ -125,25 +126,29 @@ def menu_principal():
 
         if opcao == 1:
             limpar_tela()
-            tipo, email = login_usuario()
+            usuario = login_usuario()
 
-            if tipo == "Candidato":
+            if usuario is None:
+                continue
+            if usuario["tipo"] == "Candidato":
                 limpar_tela()
-                menu_candidato(email)
+                menu_candidato(usuario["email"])
 
-            elif tipo == "Empresa":
+            elif usuario["tipo"] == "Empresa":
                 print("\nVocê não pode acessar a área de candidato com uma conta de empresa.")
                 pausar()
 
         elif opcao == 2:
             limpar_tela()
-            tipo, email = login_usuario()
+            usuario = login_usuario()
 
-            if tipo == "Empresa":
+            if usuario is None:
+                continue
+            if usuario["tipo"] == "Empresa":
                 limpar_tela()
-                menu_empresa()
+                menu_empresa(usuario)
 
-            elif tipo == "Candidato":
+            elif usuario["tipo"] == "Candidato":
                 print("\nVocê não pode acessar a área de empresa com uma conta de candidato.")
                 pausar()
 

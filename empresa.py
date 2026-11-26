@@ -5,7 +5,7 @@ def buscar_empresa(dados, email):
     """procura o perfil da empresa pelo email de login."""
     for empresa in dados["empresas"]:
         if empresa["email"] == email:
-            return empresa 
+            return empresa
 
     return None
 
@@ -143,6 +143,3 @@ def menu_perfil_empresa(usuario):
 if __name__ == "__main__":
     usuario_teste = {"email": "teste@empresa.com"}
     menu_perfil_empresa(usuario_teste)
-
-
-

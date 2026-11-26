@@ -51,14 +51,12 @@ def ler_salario():
             print("Erro! Digite apenas numeros, com ponto no lugar da virgula.")
 
 def gerar_id(dados):
-    """cria um numero novo para a vaga: o maior id + 1."""
-    maior = 0
-
-    for vaga in dados["vagas"]:
-        if vaga ["id"] > maior:
-            maior = vaga["id"]
-
-    return maior + 1
+    """Evita reutilizar IDs ainda referenciados no histórico."""
+    ids = [vaga["id"] for vaga in dados["vagas"]]
+    for lista in ("interacoes", "interesses_empresas"):
+        ids.extend(registro.get("vaga_id") for registro in dados.get(lista, []))
+    ids.extend(registro.get("id_vaga") for registro in dados.get("candidaturas", []))
+    return max((id_vaga for id_vaga in ids if isinstance(id_vaga, int)), default=0) + 1
 
 def mostrar_vaga(vaga):
     """imprime os dados de uma vaga."""
@@ -76,7 +74,8 @@ def publicar_vaga(usuario):
     """CREATE: cadastra uma vaga nova."""
     dados = carregar_dados()
 
-    if buscar_empresa(dados, usuario["email"]) is not None:
+    empresa = buscar_empresa(dados, usuario["email"])
+    if empresa is None:
         print("\nCadastre o perfil da empresa antes de publicar vagas (opcao 5).")
         return
 
@@ -93,6 +92,7 @@ def publicar_vaga(usuario):
     vaga = {
         "id": gerar_id(dados),
         "email_empresa": usuario["email"],
+        "empresa": empresa["nome"],
         "titulo": titulo,
         "area": area,
         "modalidade": modalidade,
@@ -114,7 +114,7 @@ def listar_minhas_vagas(usuario):
     encontrou = False
 
     for vaga in dados["vagas"]:
-        if vaga["email_empresa"] == usuario["email"]:
+        if vaga.get("email_empresa") == usuario["email"]:
             mostrar_vaga(vaga)
             encontrou = True
 
@@ -130,14 +130,14 @@ def buscar_vaga(dados, usuario):
         print("Erro! Digite apenas numeros.")
         return None
     for vaga in dados["vagas"]:
-        if vaga["id"] == id_vaga["email_empresa"] == usuario["email"]:
+        if vaga["id"] == id_vaga and vaga.get("email_empresa") == usuario["email"]:
             return vaga
 
     print("Vaga nao encontrada.")
     return None
 
 def editar_vaga(usuario):
-    """UPDATE: altera uma vaga. Enter em branco mantem o valor antigo.""" 
+    """UPDATE: altera uma vaga. Enter em branco mantem o valor antigo."""
     listar_minhas_vagas(usuario)
 
     dados = carregar_dados()
@@ -189,20 +189,14 @@ def excluir_vaga(usuario):
     if vaga is None:
         return
 
-    resposta = input(f"Tem certeza que deseja excluir '{vaga['titulos']}'? (s/n): ")
+    resposta = input(f"Tem certeza que deseja excluir '{vaga['titulo']}'? (s/n): ")
 
     if resposta == "s":
-        vagas_que_ficam = []
-
-        for outra_vaga in dados["vagas"]:
-            if outra_vaga["id"] != vaga["id"]:
-                vagas_que_ficam.append(outra_vaga)
-
-                dados["vagas"] = vagas_que_ficam
-                salvar_dados(dados)
-                print("\nVaga excluida com sucesso!")
-            else:
-                print("\nExclusao cancelada!")
+        dados["vagas"].remove(vaga)
+        salvar_dados(dados)
+        print("\nVaga excluida com sucesso!")
+    else:
+        print("\nExclusao cancelada!")
 
 def menu_gerenciar_vagas(usuario):
     while True:

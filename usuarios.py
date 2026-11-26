@@ -89,7 +89,7 @@ def cadastrar_usuario():
 
 
 def login_usuario():
-    """Solicita credenciais até entrar ou voltar; retorna o tipo e o email da conta."""
+    """Retorna a conta autenticada ou None ao voltar."""
     dados = carregar_dados()
 
     while True:
@@ -105,7 +105,7 @@ def login_usuario():
                 print("\nLogin realizado com sucesso!")
                 print(f"Bem-vindo(a), {usuario['nome']}!")
 
-                return usuario["tipo"], usuario["email"]
+                return usuario
 
         print("\nEmail ou senha incorretos!")
 
@@ -114,5 +114,5 @@ def login_usuario():
         )
 
         if opcao == "0":
-            return None, None
+            return None
 

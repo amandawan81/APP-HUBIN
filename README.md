@@ -1,6 +1,6 @@
-## 🚀 Como executar — Swipe e Vagas Favoritas
+## 🚀 Como executar o HubIn
 
-Esta branch (`feature/swipe-favoritos`) contém a implementação do sistema de swipe e favoritos do Hubin, desenvolvido em Python e utilizando JSON para armazenar os dados.
+O HubIn reúne cadastro, perfis de candidato e empresa, vagas, swipe, favoritos e match em um programa Python que armazena os dados em JSON.
 
 ### 📌 Como executar o projeto
 
@@ -15,7 +15,7 @@ cd APP-HUBIN
 
 ```bash
 git fetch origin
-git switch feature/swipe-favoritos
+git switch feature/integracao-hubin
 ```
 
 **3. Execute o programa:**
@@ -80,36 +80,7 @@ Ao remover uma favorita, a interação correspondente é apagada, permitindo que
 
 ### 🧪 Dados fictícios utilizados
 
-Para testar as funcionalidades, foram adicionados dados de demonstração ao arquivo `dados.json`.
-
-**Cadastros de teste:**
-
-- 2 contas de candidato.
-- 2 perfis de candidato.
-
-**Vagas de exemplo:**
-
-| ID | Empresa | Vaga |
-|---|---|---|
-| 1 | iFood | Estágio em Desenvolvimento de Software |
-| 2 | Nubank | Analista de Dados Júnior |
-| 3 | Banco do Brasil | Assistente Administrativo |
-| 4 | Amazon | Analista de Logística Júnior |
-| 5 | Mercado Livre | Estágio em Design de Produto |
-
-Essas vagas são apenas exemplos para testar o funcionamento do Hubin e não representam oportunidades reais.
-
-Cada vaga possui um `id` único para facilitar sua identificação no sistema.
-
-**Interações de teste:**
-
-Foram adicionadas três decisões de exemplo para uma conta de teste:
-
-- Vaga 1: `gostei`
-- Vaga 2: `nao gostei`
-- Vaga 3: `gostei`
-
-Essas decisões ficam armazenadas na lista `"interacoes"` do JSON.
+O arquivo `dados.json` inclui três contas de demonstração (`candidato1@example.invalid` a `candidato3@example.invalid`, com senhas `demo-1` a `demo-3`), cinco vagas de exemplo e decisões de swipe de demonstração.
 
 ### ✅ Como testar
 
@@ -126,6 +97,8 @@ Essas decisões ficam armazenadas na lista `"interacoes"` do JSON.
 
 Também é possível abrir o `dados.json` para observar as alterações registradas pelo sistema.
 
+Para testar o match, entre como empresa e cadastre o perfil na opção `5 - Perfil da empresa`. Publique uma vaga com a opção `1 - Publicar vaga`. Em `3 - Ver candidatos`, selecione o candidato e informe o ID da vaga para registrar o interesse. Quando o candidato também marcar `D` nessa vaga, o match aparece em `4 - Ver matches`.
+
 **Observação:** execute o programa a partir da pasta principal do projeto, onde está localizado o `dados.json`.
 
 ### 📁 Arquivos principais
@@ -136,6 +109,9 @@ Também é possível abrir o `dados.json` para observar as alterações registra
 | `menu_hubin.py` | Menus e navegação pelo terminal |
 | `usuarios.py` | Cadastro e login |
 | `candidatos.py` | Perfil do candidato |
+| `empresa.py` | Perfil da empresa |
+| `vagas.py` | Publicação e gerenciamento de vagas |
+| `match.py` | Interesse da empresa e confirmação de matches |
 | `arquivos.py` | Leitura e gravação do JSON |
 | `dados.json` | Armazenamento dos dados |
 
@@ -143,5 +119,4 @@ Também é possível abrir o `dados.json` para observar as alterações registra
 
 - O swipe funciona pelo terminal, utilizando as teclas D e E.
 - O sistema não envia candidaturas automaticamente.
-- As funcionalidades de publicação de vagas, candidaturas e match ainda dependem de outras etapas do desenvolvimento.
-- Os dados de demonstração devem ser substituídos por informações inteiramente fictícias antes de compartilhar o projeto, sem e-mails, telefones ou senhas reais.
+- A opção `2 - Minhas candidaturas` exibe a mensagem reservada para a funcionalidade.

@@ -2,6 +2,7 @@
 
 from arquivos import carregar_dados, salvar_dados
 from candidatos import mostrar
+from match import verificar_match
 from usuarios import limpar_tela
 
 
@@ -42,11 +43,15 @@ def vagas_por_id(dados):
     if "vagas" not in dados:
         return vagas
 
+    empresas = {empresa["email"]: empresa["nome"] for empresa in dados.get("empresas", [])}
     for vaga in dados["vagas"]:
         if "id" not in vaga:
             continue
         id_vaga = vaga["id"]
         if id_vaga is not None and id_vaga not in vagas:
+            nome_empresa = empresas.get(vaga.get("email_empresa"))
+            if nome_empresa:
+                vaga = {**vaga, "empresa": nome_empresa}
             vagas[id_vaga] = vaga
     return vagas
 
@@ -66,6 +71,8 @@ def registrar_interacao(email, id_vaga, decisao, reavaliar=False):
         interacao["decisao"] = decisao
     else:
         return
+    if decisao == "gostei":
+        verificar_match(dados, email, id_vaga)
     salvar_dados(dados)
 
 
