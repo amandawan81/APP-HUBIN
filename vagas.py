@@ -52,11 +52,22 @@ def ler_salario():
 
 def gerar_id(dados):
     """Evita reutilizar IDs ainda referenciados no histórico."""
-    ids = [vaga["id"] for vaga in dados["vagas"]]
-    for lista in ("interacoes", "interesses_empresas"):
-        ids.extend(registro.get("vaga_id") for registro in dados.get(lista, []))
-    ids.extend(registro.get("id_vaga") for registro in dados.get("candidaturas", []))
-    return max((id_vaga for id_vaga in ids if isinstance(id_vaga, int)), default=0) + 1
+    maior = 0
+    campos_id = {
+        "vagas": "id",
+        "interacoes": "vaga_id",
+        "interesses_empresas": "vaga_id",
+        "candidaturas": "id_vaga"
+    }
+    for lista in campos_id:
+        if lista in dados:
+            campo = campos_id[lista]
+            for registro in dados[lista]:
+                if campo in registro:
+                    id_vaga = registro[campo]
+                    if isinstance(id_vaga, int) and id_vaga > maior:
+                        maior = id_vaga
+    return maior + 1
 
 def mostrar_vaga(vaga):
     """imprime os dados de uma vaga."""
@@ -108,13 +119,17 @@ def publicar_vaga(usuario):
     print("\nVaga publicada com sucesso! id da vaga:", vaga["id"])
 
 
+def vaga_da_empresa(vaga, email):
+    return "email_empresa" in vaga and vaga["email_empresa"] == email
+
+
 def listar_minhas_vagas(usuario):
     """READ: mostra so as vagas da empresa logada."""
     dados = carregar_dados()
     encontrou = False
 
     for vaga in dados["vagas"]:
-        if vaga.get("email_empresa") == usuario["email"]:
+        if vaga_da_empresa(vaga, usuario["email"]):
             mostrar_vaga(vaga)
             encontrou = True
 
@@ -130,7 +145,7 @@ def buscar_vaga(dados, usuario):
         print("Erro! Digite apenas numeros.")
         return None
     for vaga in dados["vagas"]:
-        if vaga["id"] == id_vaga and vaga.get("email_empresa") == usuario["email"]:
+        if vaga["id"] == id_vaga and vaga_da_empresa(vaga, usuario["email"]):
             return vaga
 
     print("Vaga nao encontrada.")

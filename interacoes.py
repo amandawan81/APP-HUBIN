@@ -2,7 +2,6 @@
 
 from arquivos import carregar_dados, salvar_dados
 from candidatos import mostrar
-from match import verificar_match
 from usuarios import limpar_tela
 
 
@@ -31,6 +30,8 @@ def carregar_interacoes(email):
 
 def buscar_interacao(dados, email, id_vaga):
     """Retorna a decisão do candidato para a vaga, ou None se ela ainda não existir."""
+    if "interacoes" not in dados:
+        return None
     for interacao in dados["interacoes"]:
         if interacao["candidato_email"] == email and interacao["vaga_id"] == id_vaga:
             return interacao
@@ -43,15 +44,20 @@ def vagas_por_id(dados):
     if "vagas" not in dados:
         return vagas
 
-    empresas = {empresa["email"]: empresa["nome"] for empresa in dados.get("empresas", [])}
+    empresas = {}
+    if "empresas" in dados:
+        for empresa in dados["empresas"]:
+            empresas[empresa["email"]] = empresa["nome"]
     for vaga in dados["vagas"]:
         if "id" not in vaga:
             continue
         id_vaga = vaga["id"]
         if id_vaga is not None and id_vaga not in vagas:
-            nome_empresa = empresas.get(vaga.get("email_empresa"))
-            if nome_empresa:
-                vaga = {**vaga, "empresa": nome_empresa}
+            if "email_empresa" in vaga:
+                email = vaga["email_empresa"]
+                if email in empresas and empresas[email]:
+                    vaga = vaga.copy()
+                    vaga["empresa"] = empresas[email]
             vagas[id_vaga] = vaga
     return vagas
 
@@ -72,6 +78,8 @@ def registrar_interacao(email, id_vaga, decisao, reavaliar=False):
     else:
         return
     if decisao == "gostei":
+        from match import verificar_match
+
         verificar_match(dados, email, id_vaga)
     salvar_dados(dados)
 
@@ -94,9 +102,10 @@ def explorar_vagas(email):
     reavaliar = False
     while True:
         dados = carregar_interacoes(email)
-        vagas_ativas = {
-            id_vaga: vaga for id_vaga, vaga in vagas_por_id(dados).items() if vaga.get("ativa", True)
-        }
+        vagas_ativas = {}
+        for id_vaga, vaga in vagas_por_id(dados).items():
+            if "ativa" not in vaga or vaga["ativa"]:
+                vagas_ativas[id_vaga] = vaga
         if not vagas_ativas:
             print("\nNão há vagas ativas no momento.")
             return True
@@ -109,7 +118,9 @@ def explorar_vagas(email):
             print("\n=== Explorar vagas ===")
             mostrar_vaga(vaga)
             favorita = interacao is not None and interacao["decisao"] == "gostei"
-            opcao_rejeitar = "Não gostei (remover dos favoritos)" if favorita else "Não gostei"
+            opcao_rejeitar = "Não gostei"
+            if favorita:
+                opcao_rejeitar = "Não gostei (remover dos favoritos)"
             while True:
                 opcao = input(f"\nD - Gostei | E - {opcao_rejeitar} | 0 - Voltar\nEscolha uma opção: ").strip().upper()
                 if opcao == "0":
@@ -120,8 +131,10 @@ def explorar_vagas(email):
 
             registrar_interacao(email, id_vaga, decisoes[opcao], reavaliar=reavaliar)
             if opcao == "D":
-                mensagem = "Esta vaga já está nos favoritos!" if favorita else "Vaga adicionada aos favoritos!"
-                print(f"\n{mensagem}")
+                if favorita:
+                    print("\nEsta vaga já está nos favoritos!")
+                else:
+                    print("\nVaga adicionada aos favoritos!")
                 input("\nPressione Enter para continuar...")
 
             limpar_tela()
