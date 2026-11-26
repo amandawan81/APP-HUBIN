@@ -136,7 +136,10 @@ def explorar_vagas(email):
 def remover_favorita(email, id_vaga):
     """Apaga a decisão de gostar para que a vaga possa aparecer novamente."""
     dados = carregar_interacoes(email)
+    
+    ''''procura se o candidato já interagiu com a vaga informada''''
     interacao = buscar_interacao(dados, email, id_vaga)
+    
     if interacao is not None and interacao["decisao"] == "gostei":
         dados["interacoes"].remove(interacao)
         salvar_dados(dados)
