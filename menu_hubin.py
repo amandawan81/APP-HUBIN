@@ -1,5 +1,9 @@
+"""Organiza a navegação do Hubin e direciona cada conta à sua área."""
+
 
 from usuarios import cadastrar_usuario, login_usuario
+from candidatos import meu_perfil
+from interacoes import explorar_vagas, vagas_favoritas
 import os
 
 
@@ -25,7 +29,8 @@ def ler_opcao():
         return None
 
 
-def menu_candidato():
+def menu_candidato(email):
+    """Apresenta as opções de vagas, favoritos e perfil para o candidato autenticado."""
     while True:
         limpar_tela()
 
@@ -39,19 +44,19 @@ def menu_candidato():
         opcao = ler_opcao()
 
         if opcao == 1:
-            print("\nAqui serão exibidas as vagas.")
-            pausar()
+            if explorar_vagas(email):
+                pausar()
 
         elif opcao == 2:
             print("\nAqui estarão suas candidaturas.")
             pausar()
 
         elif opcao == 3:
-            print("\nAqui estarão suas vagas favoritas.")
-            pausar()
+            if vagas_favoritas(email):
+                pausar()
 
         elif opcao == 4:
-            print("\nAqui estarão os dados do seu perfil.")
+            meu_perfil(email)
             pausar()
 
         elif opcao == 0:
@@ -63,6 +68,7 @@ def menu_candidato():
 
 
 def menu_empresa():
+    """Apresenta o menu da empresa; as opções ainda são espaços reservados."""
     while True:
         limpar_tela()
 
@@ -105,6 +111,7 @@ def menu_empresa():
 
 
 def menu_principal():
+    """Inicia a navegação, chama cadastro ou login e verifica o tipo de conta."""
     while True:
         limpar_tela()
 
@@ -118,11 +125,11 @@ def menu_principal():
 
         if opcao == 1:
             limpar_tela()
-            tipo = login_usuario()
+            tipo, email = login_usuario()
 
             if tipo == "Candidato":
                 limpar_tela()
-                menu_candidato()
+                menu_candidato(email)
 
             elif tipo == "Empresa":
                 print("\nVocê não pode acessar a área de candidato com uma conta de empresa.")
@@ -130,7 +137,7 @@ def menu_principal():
 
         elif opcao == 2:
             limpar_tela()
-            tipo = login_usuario()
+            tipo, email = login_usuario()
 
             if tipo == "Empresa":
                 limpar_tela()
@@ -152,11 +159,6 @@ def menu_principal():
         elif opcao is not None:
             print("\nOpção não encontrada no menu!")
             pausar()
-
-
-if __name__ == "__main__":
-    menu_principal()
-
 
 
 if __name__ == "__main__":

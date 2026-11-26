@@ -1,3 +1,5 @@
+"""Cuida do cadastro, da autenticação e da limpeza do terminal."""
+
 
 import os
 from arquivos import carregar_dados, salvar_dados
@@ -9,13 +11,17 @@ def limpar_tela():
 
 
 def cadastrar_usuario():
-    """cadastra um novo usuário no sistema."""
+    """Cadastra uma conta e, para candidatos, cria também um perfil com dados opcionais."""
     dados = carregar_dados()
 
     print("\n=== Cadastro de usuário ===")
 
     nome = input("Digite seu nome completo: ")
     email = input("Digite seu email: ").strip().lower()
+
+    if "@" not in email:
+        print("O email precisa ter um @.")
+        return
 
     # verifica se o email já está cadastrado
     for usuario in dados["usuarios"]:
@@ -45,6 +51,37 @@ def cadastrar_usuario():
         "tipo": tipo
     }
 
+    if tipo == "Candidato":
+        limpar_tela()
+        print("\n=== Informações opcionais do perfil ===")
+        while True:
+            resposta = input("Quer preencher as informações adicionais? (S/N): ").strip().upper()
+            if resposta == "S" or resposta == "N":
+                break
+            print("Digite S para sim ou N para não.")
+
+        campos = {
+            "telefone": "Telefone",
+            "cidade": "Cidade",
+            "area": "Área de interesse",
+            "habilidades": "Habilidades",
+            "experiencia": "Experiência"
+        }
+        candidato = {"nome": nome, "email": email, "favoritas": []}
+        if resposta == "S":
+            limpar_tela()
+            print("\n=== Informações adicionais ===")
+            print("Pressione Enter para pular um campo.")
+
+        for campo in campos:
+            candidato[campo] = ""
+            if resposta == "S":
+                candidato[campo] = input(campos[campo] + ": ").strip()
+
+        if "candidatos" not in dados:
+            dados["candidatos"] = []
+        dados["candidatos"].append(candidato)
+
     dados["usuarios"].append(usuario)
     salvar_dados(dados)
 
@@ -52,7 +89,7 @@ def cadastrar_usuario():
 
 
 def login_usuario():
-    """realiza o login do usuário no sistema."""
+    """Solicita credenciais até entrar ou voltar; retorna o tipo e o email da conta."""
     dados = carregar_dados()
 
     while True:
@@ -68,7 +105,7 @@ def login_usuario():
                 print("\nLogin realizado com sucesso!")
                 print(f"Bem-vindo(a), {usuario['nome']}!")
 
-                return usuario["tipo"]
+                return usuario["tipo"], usuario["email"]
 
         print("\nEmail ou senha incorretos!")
 
@@ -77,5 +114,5 @@ def login_usuario():
         )
 
         if opcao == "0":
-            return None
+            return None, None
 
