@@ -98,10 +98,8 @@ def explorar_vagas(email):
     reavaliar = False
     while True:
         dados = carregar_interacoes(email)
-        vagas_ativas = {}
-        for id_vaga, vaga in vagas_por_id(dados).items():
-            if "ativa" not in vaga or vaga["ativa"]:
-                vagas_ativas[id_vaga] = vaga
+        vagas_ativas = vagas_por_id(dados)
+        
         if not vagas_ativas:
             print("\nNão há vagas ativas no momento.")
             return True
