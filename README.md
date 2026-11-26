@@ -105,13 +105,12 @@ Para testar o match, entre como empresa e cadastre o perfil na opção `5 - Perf
 
 | Arquivo | Função |
 |---|---|
-| `interacoes.py` | Implementação do swipe e favoritos |
+| `interacoes.py` | Swipe, favoritos e match |
 | `menu_hubin.py` | Menus e navegação pelo terminal |
 | `usuarios.py` | Cadastro e login |
 | `candidatos.py` | Perfil do candidato |
 | `empresa.py` | Perfil da empresa |
 | `vagas.py` | Publicação e gerenciamento de vagas |
-| `match.py` | Interesse da empresa e confirmação de matches |
 | `arquivos.py` | Leitura e gravação do JSON |
 | `dados.json` | Armazenamento dos dados |
 

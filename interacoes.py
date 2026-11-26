@@ -1,9 +1,9 @@
-"""Gerencia as decisões de swipe e as vagas favoritas dos candidatos."""
+"""Gerencia swipe, favoritos e interesses mútuos por vaga."""
 
 from arquivos import carregar_dados, salvar_dados
 from candidatos import mostrar
-from match import verificar_match
 from usuarios import limpar_tela
+from vagas import buscar_vaga, vaga_da_empresa
 
 
 def carregar_interacoes(email):
@@ -31,6 +31,8 @@ def carregar_interacoes(email):
 
 def buscar_interacao(dados, email, id_vaga):
     """Retorna a decisão do candidato para a vaga, ou None se ela ainda não existir."""
+    if "interacoes" not in dados:
+        return None
     for interacao in dados["interacoes"]:
         if interacao["candidato_email"] == email and interacao["vaga_id"] == id_vaga:
             return interacao
@@ -43,15 +45,18 @@ def vagas_por_id(dados):
     if "vagas" not in dados:
         return vagas
 
-    empresas = {empresa["email"]: empresa["nome"] for empresa in dados.get("empresas", [])}
+    empresas = {}
+    if "empresas" in dados:
+        empresas = {empresa["email"]: empresa["nome"] for empresa in dados["empresas"]}
     for vaga in dados["vagas"]:
         if "id" not in vaga:
             continue
         id_vaga = vaga["id"]
         if id_vaga is not None and id_vaga not in vagas:
-            nome_empresa = empresas.get(vaga.get("email_empresa"))
-            if nome_empresa:
-                vaga = {**vaga, "empresa": nome_empresa}
+            if "email_empresa" in vaga:
+                email = vaga["email_empresa"]
+                if email in empresas and empresas[email]:
+                    vaga = {**vaga, "empresa": empresas[email]}
             vagas[id_vaga] = vaga
     return vagas
 
@@ -95,7 +100,9 @@ def explorar_vagas(email):
     while True:
         dados = carregar_interacoes(email)
         vagas_ativas = {
-            id_vaga: vaga for id_vaga, vaga in vagas_por_id(dados).items() if vaga.get("ativa", True)
+            id_vaga: vaga
+            for id_vaga, vaga in vagas_por_id(dados).items()
+            if "ativa" not in vaga or vaga["ativa"]
         }
         if not vagas_ativas:
             print("\nNão há vagas ativas no momento.")
@@ -156,7 +163,7 @@ def vagas_favoritas(email):
     Retorna True se a lista estiver vazia e False quando o candidato voltar."""
     while True:
         dados = carregar_interacoes(email)
-        print("\n=== Vagas favoritas ===")
+        print("\n=== Minhas Candidaturas ===")
         opcoes = {}
         vagas = vagas_por_id(dados)
         for id_vaga in vagas:
@@ -170,14 +177,142 @@ def vagas_favoritas(email):
             print("Empresa:", mostrar(vaga, "empresa"))
 
         if not opcoes:
-            print("\nVocê não tem vagas favoritas para exibir.")
+            print("\nVocê não tem candidaturas para exibir.")
             return True
 
-        opcao = input("\nDigite o número da vaga para remover ou 0 para voltar: ").strip()
+        opcao = input("\nDigite o número da candidatura para remover ou 0 para voltar: ").strip()
         if opcao == "0":
             return False
         elif opcao in opcoes:
             remover_favorita(email, opcoes[opcao])
-            print("\nVaga removida dos favoritos!")
+            print("\nCandidatura removida dos favoritos!")
         else:
             print("\nOpção inválida. Tente novamente.")
+
+
+def candidato_gostou(dados, candidato_email, vaga_id):
+    interacao = buscar_interacao(dados, candidato_email, vaga_id)
+    if interacao is not None:
+        return interacao["decisao"] == "gostei"
+
+    # Perfis antigos guardavam favoritos antes da lista de interações.
+    if "candidatos" in dados:
+        for candidato in dados["candidatos"]:
+            if candidato["email"] == candidato_email and "favoritas" in candidato:
+                if vaga_id in candidato["favoritas"]:
+                    return True
+    return False
+
+
+def buscar_interesse(dados, candidato_email, vaga_id):
+    if "interesses_empresas" not in dados:
+        return None
+    for interesse in dados["interesses_empresas"]:
+        if interesse["candidato_email"] == candidato_email and interesse["vaga_id"] == vaga_id:
+            return interesse
+    return None
+
+
+def verificar_match(dados, candidato_email, vaga_id):
+    """Confirma o match quando os dois lados demonstram interesse na mesma vaga."""
+    interesse = buscar_interesse(dados, candidato_email, vaga_id)
+    if interesse is None or interesse["confirmado"]:
+        return
+    if candidato_gostou(dados, candidato_email, vaga_id):
+        interesse["confirmado"] = True
+        print("\n===== NOVO MATCH! =====")
+
+
+def empresa_interesse(usuario):
+    """Lista candidatos e permite registrar interesse para uma vaga da empresa."""
+    dados = carregar_dados()
+    candidatos = {
+        str(numero): conta
+        for numero, conta in enumerate(
+            (conta for conta in dados["usuarios"] if conta["tipo"] == "Candidato"), 1
+        )
+    }
+    if not candidatos:
+        print("\nNenhum candidato encontrado.")
+        return
+
+    perfis = {perfil["email"]: perfil for perfil in dados["candidatos"]}
+    print("\n--- CANDIDATOS ---")
+    for numero, candidato in candidatos.items():
+        print(f"{numero} - {candidato['nome']}")
+        email_candidato = candidato["email"]
+        if email_candidato in perfis:
+            perfil = perfis[email_candidato]
+            if "area" in perfil and perfil["area"]:
+                print(f"Área de interesse: {perfil['area']}")
+
+    escolha = input("\nEscolha um candidato ou 0 para voltar: ").strip()
+    if escolha == "0":
+        return
+    if escolha not in candidatos:
+        print("Opção inválida!")
+        return
+
+    email = usuario["email"]
+    vagas = [
+        vaga for vaga in dados["vagas"]
+        if vaga_da_empresa(vaga, email) and ("ativa" not in vaga or vaga["ativa"])
+    ]
+    if not vagas:
+        print("\nVocê precisa de uma vaga ativa para registrar interesse.")
+        return
+
+    print("\n--- MINHAS VAGAS ATIVAS ---")
+    for vaga in vagas:
+        print(f"{vaga['id']} - {vaga['titulo']}")
+
+    vaga = buscar_vaga(dados, usuario)
+    if vaga is None:
+        return
+    if "ativa" in vaga and not vaga["ativa"]:
+        print("Escolha uma vaga ativa.")
+        return
+
+    candidato_email = candidatos[escolha]["email"]
+    vaga_id = vaga["id"]
+    if buscar_interesse(dados, candidato_email, vaga_id) is not None:
+        print("\nInteresse já registrado!")
+        return
+
+    if "interesses_empresas" not in dados:
+        dados["interesses_empresas"] = []
+    dados["interesses_empresas"].append({
+        "empresa_email": email,
+        "candidato_email": candidato_email,
+        "vaga_id": vaga_id,
+        "confirmado": False,
+    })
+    print("\nInteresse da empresa registrado!")
+    verificar_match(dados, candidato_email, vaga_id)
+    salvar_dados(dados)
+
+
+def consultar_matches(usuario):
+    """Mostra os matches confirmados das vagas da empresa autenticada."""
+    dados = carregar_dados()
+    email = usuario["email"]
+    vagas = {vaga["id"]: vaga for vaga in dados["vagas"] if vaga_da_empresa(vaga, email)}
+    nomes = {conta["email"]: conta["nome"] for conta in dados["usuarios"]}
+
+    print("\n--- MATCHES REALIZADOS ---")
+    interesses = dados["interesses_empresas"] if "interesses_empresas" in dados else []
+    matches = [
+        interesse for interesse in interesses
+        if interesse["empresa_email"] == email and interesse["confirmado"] and interesse["vaga_id"] in vagas
+    ]
+    if not matches:
+        print("Nenhum match encontrado.")
+        return
+
+    for interesse in matches:
+        vaga = vagas[interesse["vaga_id"]]
+        email_candidato = interesse["candidato_email"]
+        candidato = nomes[email_candidato] if email_candidato in nomes else email_candidato
+        print(f"\nVaga: {vaga['titulo']} (ID {vaga['id']})")
+        print(f"Candidato: {candidato}")
+        print("Status: MATCH CONFIRMADO")
