@@ -1,7 +1,130 @@
 {
-  "usuarios": [],
-  "candidatos": [],
-  "empresas": [],
-  "vagas": [],
-  "candidaturas": []
+    "usuarios": [
+        {
+            "nome": "Candidato Demo 1",
+            "email": "candidato1@example.invalid",
+            "senha": "demo-1",
+            "tipo": "Candidato"
+        },
+        {
+            "nome": "Candidato Demo 2",
+            "email": "candidato2@example.invalid",
+            "senha": "demo-2",
+            "tipo": "Candidato"
+        },
+        {
+            "nome": "Candidato Demo 3",
+            "email": "candidato3@example.invalid",
+            "senha": "demo-3",
+            "tipo": "Candidato"
+        }
+    ],
+    "candidatos": [
+        {
+            "nome": "Candidato Demo 1",
+            "email": "candidato1@example.invalid",
+            "telefone": "",
+            "cidade": "recife",
+            "area": "analista de dados",
+            "habilidades": "programar em python,TYPE SCRIPT e JAVA",
+            "experiencia": "5 anos na amazon",
+            "favoritas": []
+        },
+        {
+            "nome": "Candidato Demo 2",
+            "email": "candidato2@example.invalid",
+            "favoritas": [],
+            "telefone": "",
+            "cidade": "recife",
+            "area": "fisica nuclear",
+            "habilidades": "pesquisa de fisica",
+            "experiencia": "nenhuma"
+        },
+        {
+            "nome": "Candidato Demo 3",
+            "email": "candidato3@example.invalid",
+            "favoritas": [],
+            "telefone": "",
+            "cidade": "recife",
+            "area": "analista",
+            "habilidades": "linda",
+            "experiencia": "maravilhosa"
+        }
+    ],
+    "empresas": [],
+    "vagas": [
+        {
+            "id": 1,
+            "empresa": "iFood",
+            "titulo": "Estágio em Desenvolvimento de Software",
+            "salario": "R$ 1.800 a R$ 2.400 por mês",
+            "modalidade": "Remoto"
+        },
+        {
+            "id": 2,
+            "empresa": "Nubank",
+            "titulo": "Analista de Dados Júnior",
+            "salario": "R$ 4.500 a R$ 6.000 por mês",
+            "modalidade": "Híbrido"
+        },
+        {
+            "id": 3,
+            "empresa": "Banco do Brasil (BB)",
+            "titulo": "Assistente Administrativo",
+            "salario": "R$ 2.800 a R$ 3.600 por mês",
+            "modalidade": "Presencial"
+        },
+        {
+            "id": 4,
+            "empresa": "Amazon",
+            "titulo": "Analista de Logística Júnior",
+            "salario": "R$ 3.200 a R$ 4.400 por mês",
+            "modalidade": "Presencial"
+        },
+        {
+            "id": 5,
+            "empresa": "Mercado Livre",
+            "titulo": "Estágio em Design de Produto",
+            "salario": "R$ 1.600 a R$ 2.200 por mês",
+            "modalidade": "Híbrido"
+        }
+    ],
+    "candidaturas": [],
+    "interacoes": [
+        {
+            "candidato_email": "candidato1@example.invalid",
+            "vaga_id": 1,
+            "decisao": "gostei"
+        },
+        {
+            "candidato_email": "candidato1@example.invalid",
+            "vaga_id": 2,
+            "decisao": "gostei"
+        },
+        {
+            "candidato_email": "candidato1@example.invalid",
+            "vaga_id": 3,
+            "decisao": "gostei"
+        },
+        {
+            "candidato_email": "candidato1@example.invalid",
+            "vaga_id": 4,
+            "decisao": "nao gostei"
+        },
+        {
+            "candidato_email": "candidato1@example.invalid",
+            "vaga_id": 5,
+            "decisao": "nao gostei"
+        },
+        {
+            "candidato_email": "candidato3@example.invalid",
+            "vaga_id": 1,
+            "decisao": "gostei"
+        },
+        {
+            "candidato_email": "candidato3@example.invalid",
+            "vaga_id": 2,
+            "decisao": "gostei"
+        }
+    ]
 }

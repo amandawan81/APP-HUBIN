@@ -1,138 +1,122 @@
-# 💜🧡 Hubin
+## 🚀 Como executar o HubIn
 
-**Mais inclusão. Mais oportunidades.**
+O HubIn reúne cadastro, perfis de candidato e empresa, vagas, swipe, favoritos e match em um programa Python que armazena os dados em JSON.
 
-Plataforma de recrutamento inclusivo que conecta candidatos e empresas por meio de perfis profissionais, vagas e interesse mútuo: o **match**.
+### 📌 Como executar o projeto
 
-Este repositório será utilizado para transformar o protótipo do Hubin em um sistema desenvolvido em **Python**, com controle de versão utilizando **Git** e organização do projeto no **GitHub**.
+**1. Clone o repositório:**
 
-> 🚧 Projeto em fase inicial. As funcionalidades descritas abaixo fazem parte do planejamento e serão implementadas por etapas.
-
-## 📌 Sobre o projeto
-
-O Hubin nasceu em um projeto acadêmico da **CESAR School**, com a proposta de aproximar talentos e empresas que valorizam a diversidade e a inclusão no mercado de trabalho.
-
-A experiência combina a apresentação de oportunidades em cartões com a possibilidade de demonstrar interesse em uma vaga. A empresa pode consultar as candidaturas e os currículos recebidos e também demonstrar interesse no candidato. Quando os dois lados têm interesse, acontece o match.
-
-A proposta de negócio é **B2B**: as empresas são o público pagante, enquanto os candidatos utilizam a plataforma para encontrar oportunidades profissionais.
-
-## 🎯 Objetivos
-
-- Facilitar o encontro entre candidatos e oportunidades de trabalho.
-- Valorizar habilidades, formação e interesses profissionais.
-- Ampliar a visibilidade de talentos de grupos historicamente sub-representados, incluindo pessoas negras e pessoas com deficiência.
-- Oferecer às empresas uma visão organizada das vagas e candidaturas.
-- Desenvolver uma experiência simples, acessível e adaptada ao celular.
-
-## 📱 Protótipo
-
-O protótipo é a referência para os fluxos, a identidade visual e o comportamento esperado do sistema.
-
-🔗 [Conheça o protótipo do Hubin](https://coffee-stand-21929905.figma.site)
-
-A identidade visual utiliza **roxo e laranja**, com diferenciação entre as áreas de candidatos e empresas.
-
-## 👤 Área do candidato — funcionalidades planejadas
-
-- Cadastro, login e edição do perfil.
-- Informações pessoais, formação, habilidades e resumo profissional.
-- Cadastro e visualização do currículo.
-- Busca de vagas por área de interesse, modalidade, contrato e faixa salarial.
-- Visualização dos detalhes das oportunidades.
-- Interação com cartões de vagas por swipe e botões de ação.
-- Ações para demonstrar interesse, salvar uma vaga ou indicar desinteresse.
-- Consulta às vagas favoritas e às candidaturas realizadas.
-- Recebimento da confirmação de match com uma empresa.
-- Retorno ao menu principal durante a navegação.
-
-## 🏢 Área da empresa — funcionalidades planejadas
-
-- Cadastro e login da empresa.
-- Perfil da organização.
-- Painel com vagas abertas e quantidade de candidaturas.
-- Publicação e gerenciamento de vagas.
-- Consulta às pessoas que se candidataram a cada oportunidade.
-- Visualização do perfil, das habilidades e do currículo do candidato.
-- Atualização das etapas da candidatura: recebida, em análise, entrevista e finalizada.
-- Demonstração de interesse em candidatos.
-- Confirmação do match quando houver interesse mútuo.
-- Retorno ao menu principal durante a navegação.
-
-## 🤝 Como o match funciona
-
-1. A empresa publica uma vaga.
-2. O candidato encontra a oportunidade e demonstra interesse.
-3. A empresa recebe a candidatura e consulta o perfil e o currículo.
-4. A empresa também demonstra interesse no candidato.
-5. O sistema confirma o match e permite avançar para o contato entre as partes.
-
-O match representa interesse mútuo e não significa contratação automática. A forma de contato após o match será definida durante o desenvolvimento.
-
-## 🔐 Informações opcionais e inclusão
-
-O planejamento inclui informações de autodeclaração, como raça/cor, identidade de gênero, pertencimento à comunidade LGBTQIA+ e deficiência. O preenchimento deve ser opcional, com finalidade e visibilidade claras para o candidato.
-
-Esses dados não devem ser inferidos por nome ou fotografia. Para demonstrações e testes, serão utilizados dados fictícios, sem publicar currículos ou informações pessoais reais no repositório.
-
-## 🛠️ Tecnologias e ferramentas
-
-| Tecnologia | Finalidade |
-| --- | --- |
-| Python | Desenvolvimento da lógica e das funcionalidades do sistema |
-| Git | Histórico das alterações e controle de versão |
-| GitHub | Hospedagem do código, tarefas e colaboração |
-| Figma / Figma Make | Referência visual e navegação do protótipo |
-
-O framework, o banco de dados e a tecnologia da interface serão definidos nas próximas etapas. A experiência visual de swipe dependerá da implementação da interface, integrada à lógica em Python.
-
-## 🗺️ Etapas de desenvolvimento
-
-- [x] Definir a proposta do Hubin.
-- [x] Criar o protótipo de referência.
-- [x] Preparar a documentação inicial do projeto.
-- [ ] Definir a arquitetura e as ferramentas complementares.
-- [ ] Organizar a estrutura inicial do código.
-- [ ] Implementar cadastro e autenticação.
-- [ ] Implementar os perfis de candidato e empresa.
-- [ ] Implementar publicação e busca de vagas.
-- [ ] Implementar currículos e candidaturas.
-- [ ] Implementar favoritos e demonstração de interesse.
-- [ ] Implementar a regra de match.
-- [ ] Integrar as telas e o swipe à lógica do sistema.
-- [ ] Testar os fluxos no computador e no celular.
-- [ ] Preparar uma versão de demonstração.
-
-## 🚀 Execução
-
-As instruções para instalar dependências e executar o sistema serão adicionadas quando a primeira versão do código estiver disponível.
-
-Neste momento, este README documenta a proposta e o escopo planejado do projeto.
-
-## 🌿 Organização com Git e GitHub
-
-O desenvolvimento será feito em pequenas entregas, com commits que descrevam claramente cada alteração.
-
-- `main`: versão principal do projeto.
-- `feature/nome-da-funcionalidade`: desenvolvimento de uma funcionalidade.
-- `fix/nome-da-correcao`: correção de um problema.
-- Issues: registro de tarefas, melhorias e problemas encontrados.
-- Pull requests: revisão e integração das alterações à versão principal.
-
-Exemplos de mensagens de commit:
-
-```text
-docs: adiciona documentação inicial do Hubin
-feat: adiciona cadastro de candidatos
-feat: implementa publicação de vagas
-fix: corrige confirmação de interesse mútuo
+```bash
+git clone https://github.com/borella-dev/APP-HUBIN.git
+cd APP-HUBIN
 ```
 
-## 🎓 Contexto acadêmico
+**2. Acesse a branch:**
 
-Projeto desenvolvido no contexto da **CESAR School**, aplicando conhecimentos de programação, organização de software e trabalho em equipe.
+```bash
+git fetch origin
+git switch feature/integracao-hubin
+```
 
-Os créditos da equipe e as condições de uso do código serão adicionados conforme a organização do repositório.
+**3. Execute o programa:**
 
----
+```bash
+python menu_hubin.py
+```
 
-**Hubin — conectando talentos e empresas por um mercado de trabalho mais inclusivo. 💜🧡**
+O programa será iniciado no terminal. Não é necessário instalar bibliotecas externas.
+
+### 👤 Como utilizar
+
+No menu principal do Hubin:
+
+1. Selecione `1 - Entrar como candidato`.
+2. Faça login com uma conta de teste ou crie uma pela opção `3 - Cadastrar-se`.
+3. Após o login, será exibido o menu do candidato.
+
+**Menu do candidato:**
+
+```text
+===== ÁREA DO CANDIDATO =====
+
+1 - Explorar vagas
+2 - Minhas candidaturas
+3 - Vagas favoritas
+4 - Meu perfil
+0 - Voltar ao menu principal
+```
+
+### 💜 Sistema de Swipe
+
+Selecione a opção `1 - Explorar vagas`.
+
+O sistema apresenta uma vaga por vez, mostrando informações como empresa, título, salário e modalidade.
+
+O candidato poderá escolher:
+
+- **D — Gostei:** salva a vaga nos favoritos.
+- **E — Não gostei:** registra o desinteresse e passa para a próxima vaga.
+- **0 — Voltar:** retorna ao menu do candidato.
+
+Cada decisão é salva no arquivo `dados.json`.
+
+As vagas já avaliadas não aparecem novamente para aquele candidato, evitando repetições.
+
+**Importante:** gostar de uma vaga não significa enviar uma candidatura automaticamente.
+
+### ❤️ Vagas Favoritas
+
+Selecione a opção `3 - Vagas favoritas`.
+
+O sistema exibirá as vagas que o candidato marcou com `D`.
+
+É possível:
+
+- Visualizar as vagas favoritas.
+- Remover uma vaga digitando o número correspondente.
+- Voltar ao menu digitando `0`.
+
+Ao remover uma favorita, a interação correspondente é apagada, permitindo que a vaga apareça novamente no swipe.
+
+### 🧪 Dados fictícios utilizados
+
+O arquivo `dados.json` inclui três contas de demonstração (`candidato1@example.invalid` a `candidato3@example.invalid`, com senhas `demo-1` a `demo-3`), cinco vagas de exemplo e decisões de swipe de demonstração.
+
+### ✅ Como testar
+
+1. Execute `python menu_hubin.py`.
+2. Crie um novo candidato para começar sem decisões anteriores.
+3. Entre na área do candidato.
+4. Selecione `1 - Explorar vagas`.
+5. Digite `D` em uma vaga para adicioná-la aos favoritos.
+6. Digite `E` em outra vaga para registrar que não gostou.
+7. Volte ao menu e selecione `3 - Vagas favoritas`.
+8. Confira se a vaga curtida aparece na lista.
+9. Remova uma favorita digitando seu número.
+10. Volte a explorar vagas para verificar se ela aparece novamente.
+
+Também é possível abrir o `dados.json` para observar as alterações registradas pelo sistema.
+
+Para testar o match, entre como empresa e cadastre o perfil na opção `5 - Perfil da empresa`. Publique uma vaga com a opção `1 - Publicar vaga`. Em `3 - Ver candidatos`, selecione o candidato e informe o ID da vaga para registrar o interesse. Quando o candidato também marcar `D` nessa vaga, o match aparece em `4 - Ver matches`.
+
+**Observação:** execute o programa a partir da pasta principal do projeto, onde está localizado o `dados.json`.
+
+### 📁 Arquivos principais
+
+| Arquivo | Função |
+|---|---|
+| `interacoes.py` | Implementação do swipe e favoritos |
+| `menu_hubin.py` | Menus e navegação pelo terminal |
+| `usuarios.py` | Cadastro e login |
+| `candidatos.py` | Perfil do candidato |
+| `empresa.py` | Perfil da empresa |
+| `vagas.py` | Publicação e gerenciamento de vagas |
+| `match.py` | Interesse da empresa e confirmação de matches |
+| `arquivos.py` | Leitura e gravação do JSON |
+| `dados.json` | Armazenamento dos dados |
+
+### ⚠️ Observações
+
+- O swipe funciona pelo terminal, utilizando as teclas D e E.
+- O sistema não envia candidaturas automaticamente.
+- A opção `2 - Minhas candidaturas` exibe a mensagem reservada para a funcionalidade.
