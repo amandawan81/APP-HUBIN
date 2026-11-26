@@ -67,7 +67,7 @@ def cadastrar_usuario():
             "habilidades": "Habilidades",
             "experiencia": "Experiência"
         }
-        candidato = {"nome": nome, "email": email, "favoritas": []}
+        candidato = {"nome": nome, "email": email}
         if resposta == "S":
             limpar_tela()
             print("\n=== Informações adicionais ===")
